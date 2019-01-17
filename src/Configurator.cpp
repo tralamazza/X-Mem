@@ -439,6 +439,7 @@ int32_t Configurator::configureFromInput(int argc, char* argv[]) {
     }
 
     // Check for mmap file
+    std::cout << "MMAP_FILE: " << options[MMAP_FILE] << "\n";
     if (options[MMAP_FILE]) {
         mmapfile_ = options[MMAP_FILE].arg;
         use_mmap_file_ = true;

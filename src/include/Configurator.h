@@ -99,6 +99,7 @@ namespace xmem {
         { USE_READS, 0, "R", "reads", Arg::None, "    -R, --reads    \tUse memory read-based patterns in load traffic-generating threads." },
         { USE_WRITES, 0, "W", "writes", Arg::None, "    -W, --writes    \tUse memory write-based patterns in load traffic-generating threads." },
         { STRIDE_SIZE, 0, "S", "stride_size", MyArg::Integer, "    -S, --stride_size    \tA stride size to use for load traffic-generating threads, specified in powers-of-two multiples of the chunk size(s). Allowed values: 1, -1, 2, -2, 4, -4, 8, -8, 16, -16. Positive indicates the forward direction (increasing addresses), while negative indicates the reverse direction." },
+        { MMAP_FILE, 0, "m", "mmapfile", MyArg::Required, "    -m, --mmapfile    \tUse a memory mapped file for the working set" },
         { UNKNOWN, 0, "", "", Arg::None,
         "\n"
         "If a given option is not specified, X-Mem defaults will be used where appropriate.\n"
@@ -139,7 +140,6 @@ namespace xmem {
         "\n"
         "Have fun! =]\n"
         },
-        { MMAP_FILE, 0, "m", "mmapfile", MyArg::Required, "    -m, --mmapfile    \tUse a memory mapped file for the working set" },
 
         { 0, 0, 0, 0, 0, 0 }
     };

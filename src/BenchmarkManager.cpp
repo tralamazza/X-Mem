@@ -481,6 +481,9 @@ void BenchmarkManager::setupWorkingSets(size_t working_set_size) {
                 std::string file = config_.MMapFile();
                 int fd = open(file.c_str(), O_RDWR | O_DIRECT, S_IRWXU);
                 mem_arrays_[numa_node] = mmap(NULL, allocation_size, PROT_WRITE | PROT_READ, MAP_SHARED, fd, 0);
+
+                std::cout << "Using MMap file: " << file << "\n";
+
             } else {
                 // Here is where we insert out new code
                 numa_set_strict(1); //Enforce NUMA memory allocation to land on specified node or fail otherwise. Alternative node fallback is forbidden.
