@@ -68,7 +68,8 @@ namespace xmem {
         MEMORY_NUMA_NODE_AFFINITY,
         USE_READS,
         USE_WRITES,
-        STRIDE_SIZE
+        STRIDE_SIZE,
+        MMAP_FILE
     };
 
     /**
@@ -138,6 +139,8 @@ namespace xmem {
         "\n"
         "Have fun! =]\n"
         },
+        { MMAP_FILE, 0, "m", "mmapfile", MyArg::Required, "    -m, --mmapfile    \tUse a memory mapped file for the working set" },
+
         { 0, 0, 0, 0, 0, 0 }
     };
 
@@ -387,6 +390,9 @@ namespace xmem {
          */
         bool useStrideN16() const { return use_stride_n16_; }
 
+        bool useMMapFile() const { return use_mmap_file_; }
+        std::string MMapFile() const { return mmapfile_; }
+
     private:
         /**
          * @brief Inspects a command line option (switch) to see if it occurred more than once, and warns the user if this is the case. The program only uses the first occurrence of any switch.
@@ -445,6 +451,8 @@ namespace xmem {
         bool use_stride_n8_; /**< If true, use a stride of -8 in relevant benchmarks. */
         bool use_stride_p16_; /**< If true, use a stride of +16 in relevant benchmarks. */
         bool use_stride_n16_; /**< If true, use a stride of -16 in relevant benchmarks. */
+        bool use_mmap_file_; /**< If true, use a mmaped file for the working set >**/
+        std::string mmapfile_; /**< The MMap file to use >**/
     };
 };
 

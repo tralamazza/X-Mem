@@ -71,6 +71,12 @@ extern "C" {
 #endif
 #endif
 
+// Includes for memory mapping
+#include <sys/mman.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 using namespace xmem;
 
 BenchmarkManager::BenchmarkManager(
@@ -160,7 +166,10 @@ BenchmarkManager::~BenchmarkManager() {
             else
 #endif
 #ifdef HAS_NUMA
-                numa_free(mem_arrays_[i], mem_array_lens_[i]); 
+                // TODO: unmap the file and close it.
+                if (!config_.useMMapFile()) {
+                    numa_free(mem_arrays_[i], mem_array_lens_[i]); 
+                }
 #else
                 free(orig_malloc_addr_); //this is somewhat of a band-aid
 #endif
@@ -467,8 +476,16 @@ void BenchmarkManager::setupWorkingSets(size_t working_set_size) {
 #endif
 #ifdef __gnu_linux__
 #ifdef HAS_NUMA
-            numa_set_strict(1); //Enforce NUMA memory allocation to land on specified node or fail otherwise. Alternative node fallback is forbidden.
-            mem_arrays_[numa_node] = numa_alloc_onnode(allocation_size, numa_node);
+            if (config_.useMMapFile()) {
+                // Open the MMap file and MMap it :D
+                std::string file = config_.MMapFile();
+                int fd = open(file.c_str(), O_RDWR | O_DIRECT, S_IRWXU);
+                mem_arrays_[numa_node] = mmap(NULL, allocation_size, PROT_WRITE | PROT_READ, MAP_SHARED, fd, 0);
+            } else {
+                // Here is where we insert out new code
+                numa_set_strict(1); //Enforce NUMA memory allocation to land on specified node or fail otherwise. Alternative node fallback is forbidden.
+                mem_arrays_[numa_node] = numa_alloc_onnode(allocation_size, numa_node);
+            }
 #endif
 #ifndef HAS_NUMA //special case
             mem_arrays_[numa_node] = malloc(allocation_size);

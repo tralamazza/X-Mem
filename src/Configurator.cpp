@@ -98,7 +98,9 @@ Configurator::Configurator(
     use_stride_p8_(false),
     use_stride_n8_(false),
     use_stride_p16_(false),
-    use_stride_n16_(false)
+    use_stride_n16_(false),
+    use_mmap_file_(false),
+    mmapfile_()
     {
 }
 
@@ -435,6 +437,12 @@ int32_t Configurator::configureFromInput(int argc, char* argv[]) {
         filename_ = options[OUTPUT_FILE].arg;
         use_output_file_ = true;
     }
+
+    // Check for mmap file
+    if (options[MMAP_FILE]) {
+        mmapfile_ = options[MMAP_FILE].arg;
+        use_mmap_file_ = true;
+    } 
 
     //Check if reads and/or writes should be used in throughput and loaded latency benchmarks
     if (options[USE_READS] || options[USE_WRITES]) { //override defaults
