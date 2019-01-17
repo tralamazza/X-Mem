@@ -429,7 +429,7 @@ bool BenchmarkManager::runLatencyBenchmarks() {
 
 void BenchmarkManager::setupWorkingSets(size_t working_set_size) {
     //Allocate memory in each NUMA node to be tested
-    std::cout << "Using MMap: " << config_.MMapFile() << std::endl;
+    std::cout << "Using MMap: " << config_.useMMapFile() << std::endl;
 
     //We reserve the space for these, but that doesn't mean they will all be used.
     mem_arrays_.resize(g_num_numa_nodes); 
