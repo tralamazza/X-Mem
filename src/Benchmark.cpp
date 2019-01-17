@@ -127,7 +127,6 @@ void Benchmark::printBenchmarkHeader() const {
 }
 
 void Benchmark::reportBenchmarkInfo() const {
-    std::cout << "Using MMap: " << config_.MMapFile() << std::endl;
     std::cout << "CPU NUMA Node: " << cpu_node_ << std::endl;
     std::cout << "Memory NUMA Node: " << mem_node_ << std::endl;
     std::cout << "Chunk Size: ";
