@@ -130,7 +130,7 @@ BenchmarkManager::BenchmarkManager(
         }
 
         //Generate file headers
-        results_file_ << "Test Name,Iterations,Working Set Size Per Thread (KB),Total Number of Threads,Number of Load Generating Threads,NUMA Memory Node,NUMA CPU Node,Load Access Pattern,Load Read/Write Mix,Load Chunk Size (bits),Load Stride Size (chunks),Mean Load Throughput,Min Load Throughput,25th Percentile Load Throughput,Median Load Throughput,75th Percentile Load Throughput,95th Percentile Load Throughput,99th Percentile Load Throughput,Max Load Throughput,Mode Load Throughput,Throughput Units,Mean Latency,Min Latency,25th Percentile Latency,Median Latency,75th Percentile Latency,95th Percentile Latency,99th Percentile Latency,Max Latency,Mode Latency,Latency Units,";
+        results_file_ << "Test Name,Iterations,Working Set Size Per Thread (KB),Total Number of Threads,Number of Load Generating Threads,NUMA Memory Node,NUMA CPU Node,Load Access Pattern,Load Read/Write Mix,Load Chunk Size (bits),Load Stride Size (chunks),Mean Load Throughput,Min Load Throughput,26th Percentile Load Throughput,Median Load Throughput,75th Percentile Load Throughput,95th Percentile Load Throughput,99th Percentile Load Throughput,Max Load Throughput,Mode Load Throughput,Throughput Units,Mean Latency,Min Latency,25th Percentile Latency,Median Latency,75th Percentile Latency,95th Percentile Latency,99th Percentile Latency,Max Latency,Mode Latency,Latency Units,MMap File,";
         for (uint32_t i = 0; i < dram_power_readers_.size(); i++)  {
             if (dram_power_readers_[i] != NULL) {
                 results_file_ << dram_power_readers_[i]->name() << " Mean Power (W),";
@@ -289,6 +289,7 @@ bool BenchmarkManager::runThroughputBenchmarks() {
             results_file_ << "N/A" << ",";
             results_file_ << "N/A" << ",";
             results_file_ << "N/A" << ",";
+            results_file_ << config_.MMapFile() << ",";
             for (uint32_t j = 0; j < g_num_physical_packages; j++) {
                 results_file_ << tp_benchmarks_[i]->getMeanDRAMPower(j) << ",";
                 results_file_ << tp_benchmarks_[i]->getPeakDRAMPower(j) << ",";
@@ -411,6 +412,7 @@ bool BenchmarkManager::runLatencyBenchmarks() {
             results_file_ << lat_benchmarks_[i]->getMaxMetric() << ",";
             results_file_ << lat_benchmarks_[i]->getModeMetric() << ",";
             results_file_ << lat_benchmarks_[i]->getMetricUnits() << ",";
+            results_file_ << config_.MMapFile() << ",";
             for (uint32_t j = 0; j < g_num_physical_packages; j++) {
                 results_file_ << lat_benchmarks_[i]->getMeanDRAMPower(j) << ",";
                 results_file_ << lat_benchmarks_[i]->getPeakDRAMPower(j) << ",";
