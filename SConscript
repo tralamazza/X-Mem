@@ -72,7 +72,7 @@ if hostos == 'linux': # gcc
         env.Replace(CXX = 'arm-linux-gnueabihf-g++-4.8') # Cross-compiler
         env.Append(CPPFLAGS = ' -mfloat-abi=hard -mfpu=vfpv3 -mfpu=neon -march=armv8-a')
     else:
-        print 'Error: architecture ' + arch + ' not supported on ' + hostos + ', cannot build.'
+        print('Error: architecture ' + arch + ' not supported on ' + hostos + ', cannot build.')
         exit(1)
 
     # List all C++ source files
@@ -88,8 +88,8 @@ elif hostos == 'windows': # Windows OS
     env['PDB'] = 'xmem.pdb' # Instruct Visual Studio to give us a debug/symbols file for this build of X-Mem
 
     # Set up compiler flags for VC++
-    env.Append(ASFLAGS = ' /c /nologo /WX /Zi /W3 /errorReport:prompt')
-    env.Append(CPPFLAGS = ' /c /Zi /nologo /W3 /wd4101 /WX- /MP /O2 /Oi /Ot /D WIN32 /D NDEBUG /D _CONSOLE /Gm- /EHsc /GS /fp:precise /Zc:wchar_t /Zc:forScope /Gd /TP /errorReport:queue /volatile:iso')
+    env.Append(ASFLAGS = ' /c /nologo /WX /Z7 /W3 /errorReport:prompt')
+    env.Append(CPPFLAGS = ' /c /Z7 /nologo /W3 /wd4101 /WX- /MP /O2 /Oi /Ot /D WIN32 /D NDEBUG /D _CONSOLE /Gm- /EHsc /GS /fp:precise /Zc:wchar_t /Zc:forScope /Gd /TP /errorReport:queue /volatile:iso')
     env.Append(CPPFLAGS = ' /MD') # Dynamic link. Use /MT for static link
 
     if arch == 'x64_avx':
@@ -148,10 +148,10 @@ elif hostos == 'windows': # Windows OS
         ]
 
     else:
-        print 'Error: architecture ' + arch + ' not supported on ' + hostos + ', cannot build.'
+        print('Error: architecture ' + arch + ' not supported on ' + hostos + ', cannot build.')
         exit(1)
 else:
-    print 'Error: host OS ' + hostos + ' not supported, cannot build.'
+    print('Error: host OS ' + hostos + ' not supported, cannot build.')
     exit(1)
 
 # Do the build!

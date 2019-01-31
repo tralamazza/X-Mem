@@ -310,7 +310,7 @@ bool xmem::lock_thread_to_numa_node(uint32_t numa_node) {
         //Set thread affinity mask to include all CPUs in the NUMA node of interest
         DWORD_PTR threadAffinityMask = 0;
         for (auto it = cpus_in_node.cbegin(); it != cpus_in_node.cend(); it++)
-            threadAffinityMask |= static_cast<DWORD_PTR>((1 << *it));
+            threadAffinityMask |= static_cast<DWORD_PTR>((1i64 << *it));
 
         DWORD_PTR prev_mask = SetThreadAffinityMask(tid, threadAffinityMask); //enable the CPUs
         if (prev_mask == 0)
@@ -340,7 +340,7 @@ bool xmem::lock_thread_to_cpu(uint32_t cpu_id) {
     if (tid == 0)
         return false;
     else {
-        DWORD_PTR threadAffinityMask = 1 << cpu_id;
+        DWORD_PTR threadAffinityMask = 1i64 << cpu_id;
         DWORD_PTR prev_mask = SetThreadAffinityMask(tid, threadAffinityMask); //enable only 1 CPU
         if (prev_mask == 0)
             return false;

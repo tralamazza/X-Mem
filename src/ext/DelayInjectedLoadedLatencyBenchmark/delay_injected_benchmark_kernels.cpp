@@ -40,6 +40,7 @@
 //Headers
 #include <delay_injected_benchmark_kernels.h>
 #include <common.h>
+#include <intrin.h>
 
 //Libraries
 #include <iostream>

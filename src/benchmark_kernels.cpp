@@ -872,7 +872,7 @@ bool xmem::build_random_pointer_permutation(void* start_address, void* end_addre
 
     //Represent traversal order of pointers in an array external to the
     //pointers
-    int * traversal_order = new int[num_pointers + 1];
+    size_t * traversal_order = new size_t[num_pointers + 1];
 
     //start with sequential order 0, 1, 2, ...., num_pointers-1
     for(size_t i = 0; i < num_pointers; i++)
